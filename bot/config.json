@@ -1,0 +1,21 @@
+{
+  "coins": {
+    "DOGE": {"rpc_url": "http://user:pass@doge-node:22555"},
+    "DINGO": {"rpc_url": "http://user:pass@dingo-node:22556"},
+    "terraAUS": {"rpc_url": "http://user:pass@terraa-node:22557"},
+    "AUS": {"rpc_url": "http://user:pass@aus-node:22558"}
+  },
+  "exchange_rates": {
+    "DOGE->DINGO": 2.5,
+    "DINGO->terraAUS": 1.8,
+    "terraAUS->AUS": 0.75
+  },
+  "admins": [123456789012345678],
+  "mysql": {
+    "host": "db",
+    "user": "tipbot",
+    "password": "tipbotpass",
+    "database": "tipbot"
+  },
+  "discord_token": "YOUR_DISCORD_BOT_TOKEN"
+}
