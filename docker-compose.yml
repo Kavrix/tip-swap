@@ -1,13 +1,13 @@
-version: '3.8'
 services:
   db:
-    image: mysql:8
+    image: mysql:8.0
+    container_name: tipbot_mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: tipbot
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: tipbot_db
       MYSQL_USER: tipbot
-      MYSQL_PASSWORD: tipbotpass
+      MYSQL_PASSWORD: supersecret
     ports:
       - "3306:3306"
     volumes:
@@ -15,35 +15,15 @@ services:
 
   bot:
     build: .
+    container_name: tipbot_bot
     restart: always
-    environment:
-      - DISCORD_TOKEN=${DISCORD_TOKEN}
     depends_on:
       - db
-
-  doge-node:
-    image: ruimarinho/dogecoin
-    command: ["-printtoconsole", "-rpcuser=user", "-rpcpassword=pass", "-rpcallowip=0.0.0.0/0", "-rpcbind=0.0.0.0"]
-    ports:
-      - "22555:22555"
-
-  dingo-node:
-    image: ruimarinho/dogecoin # Replace with dingod image if available
-    command: ["-printtoconsole", "-rpcuser=user", "-rpcpassword=pass", "-rpcallowip=0.0.0.0/0", "-rpcbind=0.0.0.0"]
-    ports:
-      - "22556:22556"
-
-  terraa-node:
-    image: ruimarinho/dogecoin # Replace with terraAUS daemon image
-    command: ["-printtoconsole", "-rpcuser=user", "-rpcpassword=pass", "-rpcallowip=0.0.0.0/0", "-rpcbind=0.0.0.0"]
-    ports:
-      - "22557:22557"
-
-  aus-node:
-    image: ruimarinho/dogecoin # Replace with AUS daemon image
-    command: ["-printtoconsole", "-rpcuser=user", "-rpcpassword=pass", "-rpcallowip=0.0.0.0/0", "-rpcbind=0.0.0.0"]
-    ports:
-      - "22558:22558"
+    env_file:
+      - .env
+    volumes:
+      - .:/tip-swap
+    command: python index.py
 
 volumes:
   db_data:
